@@ -12,7 +12,7 @@ from keras.preprocessing.image import image_dataset_from_directory
 
 
 training_dataset = image_dataset_from_directory(
-    directory = "DataSet/train",
+    directory = "DataSet/Train",
     image_size = (48, 48),
     color_mode = "grayscale",
     batch_size = 32,
@@ -22,7 +22,7 @@ training_dataset = image_dataset_from_directory(
 
 
 test_dataset = image_dataset_from_directory(
-    directory = "DataSet/test",
+    directory = "DataSet/Test",
     image_size = (48, 48),
     color_mode = "grayscale",
     batch_size = 32,
