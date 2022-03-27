@@ -1,6 +1,5 @@
 import numpy as np
 
-
 from tensorflow import keras
 from keras import layers
 from keras.preprocessing.image import image_dataset_from_directory
@@ -17,7 +16,7 @@ training_dataset = image_dataset_from_directory(
     color_mode = "grayscale",
     batch_size = 32,
     shuffle = True,
-    class_names = ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise']
+    class_names = ['WithMask', 'WithoutMask']
 )
 
 
@@ -26,8 +25,8 @@ test_dataset = image_dataset_from_directory(
     image_size = (48, 48),
     color_mode = "grayscale",
     batch_size = 32,
-    shuffle = False,
-    class_names = ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise']
+    shuffle = True,
+    class_names = ['WithMask', 'WithoutMask']
 )
 
 
@@ -41,7 +40,7 @@ inputs = keras.Input(shape=(48, 48, 1))
 cnn_component = layers.Rescaling(1./255)(inputs)
 
 #First Layer
-cnn_component = layers.Conv2D(filters = 64, kernel_size = 3)(inputs)
+cnn_component = layers.Conv2D(filters = 64, kernel_size = 3)(cnn_component)
 cnn_component = layers.BatchNormalization()(cnn_component)
 cnn_component = layers.Activation("relu")(cnn_component)
 cnn_component = layers.Dropout(0.2)(cnn_component)
@@ -67,7 +66,7 @@ cnn_component = layers.MaxPooling2D(pool_size=2)(cnn_component)
 #Fully Connected Layers
 cnn_component = layers.Flatten()(cnn_component)
 cnn_component = layers.Dense(256, activation = "elu")(cnn_component)
-outputs = layers.Dense(7, activation = "softmax")(cnn_component)
+outputs = layers.Dense(2, activation = "softmax")(cnn_component)
 
 cnn_model = keras.Model(inputs=inputs, outputs=outputs)
 
