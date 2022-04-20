@@ -14,7 +14,7 @@ frontFaceClassifier = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade
 
 #Declare Model to be used for Emotion Recognition and Emotion Classes
 
-maskModel = keras.models.load_model("fer_model_v1")
+maskModel = keras.models.load_model("fer_model_M1")
 class_names = ['WithMask', 'WithoutMask']
 
 #Get default webcam source
@@ -50,9 +50,9 @@ while capturingVideo:
         grayFrame = cv2.resize(gray[y:recHeight, x:recWidth], (48,48))
         imgReformat = np.expand_dims(np.array(grayFrame), axis = 0)
 
-        predictedEmotion = maskModel.predict(imgReformat)
+        maskDecision = maskModel.predict(imgReformat)
         
-        classIndex = np.where(predictedEmotion[0] == np.amax(predictedEmotion[0]))
+        classIndex = np.where(maskDecision[0] == np.amax(maskDecision[0]))
         print(class_names[classIndex[0][0]])
 
 

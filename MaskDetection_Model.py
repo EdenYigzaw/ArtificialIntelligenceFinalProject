@@ -75,18 +75,15 @@ cnn_model = keras.Model(inputs=inputs, outputs=outputs)
 #Step 3: Compile, Train and Test Model with Accuracy as the primary evaluation metric
 cnn_model.summary()
 
-cnn_model.compile(optimizer= keras.optimizers.Adam(learning_rate = 0.0001), loss = "sparse_categorical_crossentropy", metrics = ["accuracy"])
+cnn_model.compile(optimizer= keras.optimizers.RMSprop(learning_rate = 0.0001), loss = "sparse_categorical_crossentropy", metrics = ["accuracy"])
 
 cnn_model.fit(training_dataset, epochs = 20, batch_size = 32)
 
 testing_loss, testing_accuracy = cnn_model.evaluate(test_dataset)
 print(f"test accuracy: {testing_accuracy}")
+print(f"test loss: {testing_loss}")
 
-
-
-
-#NOTE: CURRENT CNN: @ EPOCH 20: 87% TRAIN ACCURACY, LOSS: 0.3661, TEST ACCURACY: 0.572
 
 
 #Step 4: Save the Model with its current weight values
-cnn_model.save("fer_model_v1")
+cnn_model.save("fer_model_M1")
